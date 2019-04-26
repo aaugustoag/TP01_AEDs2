@@ -1,4 +1,4 @@
-package tp01;
+package newpackage;
 
 import java.util.Scanner;
 
@@ -7,7 +7,7 @@ public class TestaArvorePat {
     public static void main(String[] args) {
         try {
             Scanner input = new Scanner(System.in);
-            ArvorePatricia dicionario = new ArvorePatricia(16);
+            ArvorePatricia dicionario = new ArvorePatricia(8);
             int i=1, op = 0;
             String palavra = null;
             char[] s_palavra=null;
@@ -17,12 +17,13 @@ public class TestaArvorePat {
             String palavras2[] = {"sociedade", "software", "ideia", "pessoa", "Informatica",
                 "etica", "muito", "ciencia", "computacao", "que", "area", "moral"};
 
-            ExtraiPalavra palavras = new ExtraiPalavra("delim.txt", "teste.txt");
+            ExtraiPalavra palavras = new ExtraiPalavra("/home/alexandreaag/TP01_AEDs2-master/delim.txt", "/home/alexandreaag/TP01_AEDs2-master/teste.txt");
             System.out.println("Digite o número do exemplo que vc quer executar:");
             System.out.println("1: Exemplo 01");
             System.out.println("2: Exemplo 02");
-            op = input.nextInt();
-            if (op == 1) palavras = new ExtraiPalavra("delim.txt", "exemplo1.txt");
+            //op = input.nextInt();
+            op = 1;
+            if (op == 1) palavras = new ExtraiPalavra("/home/alexandreaag/TP01_AEDs2-master/delim.txt", "/home/alexandreaag/TP01_AEDs2-master/exemplo1.txt");
             if (op == 2) palavras = new ExtraiPalavra("delim.txt", "exemplo2.txt");
             while ((palavra = palavras.proximaPalavra()) != null) {//insere palavras do arquivo escolhido
                 if(!palavra.equals(""))

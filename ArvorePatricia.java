@@ -1,6 +1,4 @@
-package tp01;
-import java.util.Arrays;
-
+package newpackage;
 public class ArvorePatricia {
   private static abstract class PatNo { }
   private static class PatNoInt extends PatNo {
@@ -14,10 +12,10 @@ public class ArvorePatricia {
   private int nbitsChave;
  
   // @{\it Retorna o i-\'esimo bit da chave k a partir da esquerda}@
-  private int bit (int i, char k) {
+  private int bit (int i, char[] k) {
     if (i == 0) return 0;
-    int c = (int)k;
-    for (int j = 1; j <= 8 - i; j++) c = c/2;
+    int c = (int)k[i];
+    for (int j = 1; j <= this.nbitsChave - i; j++) c = c/2;
     return c % 2;
   }
 
@@ -47,7 +45,7 @@ public class ArvorePatricia {
     }
     else { 
       PatNoInt aux = (PatNoInt)t;
-      if (this.bit (aux.index%8, k[aux.index/8]) == 0) pesquisa (k, aux.esq);
+      if (this.bit (aux.index, k) == 0) pesquisa (k, aux.esq);
       else pesquisa (k, aux.dir);
     }
   }
@@ -57,11 +55,11 @@ public class ArvorePatricia {
     if (!this.eExterno (t)) aux = (PatNoInt)t;
     if (this.eExterno (t) || (i < aux.index)) { // @{\it Cria um novo n\'o externo}@
       PatNo p = this.criaNoExt (k);
-      if (this.bit (i%8, k[i/8]) == 1) return this.criaNoInt (i, t, p);
+      if (this.bit (i, k) == 1) return this.criaNoInt (i, t, p);
       else return this.criaNoInt (i, p, t);
     }
     else {
-      if (this.bit (aux.index%8, k[aux.index/8]) == 1) 
+      if (this.bit (aux.index, k) == 1) 
         aux.dir = this.insereEntre (k, aux.dir, i);
       else aux.esq = this.insereEntre (k, aux.esq, i);
       return aux;
@@ -74,12 +72,12 @@ public class ArvorePatricia {
       PatNo p = t;
       while (!this.eExterno (p)) {
         PatNoInt aux = (PatNoInt)p;
-        if (this.bit (aux.index%8, k[aux.index/8]) == 1) p = aux.dir; else p = aux.esq;
+        if (this.bit (aux.index, k) == 1) p = aux.dir; else p = aux.esq;
       }
       PatNoExt aux = (PatNoExt)p;
       int i = 1; // @{\it acha o primeiro bit diferente}@
       while ((i <= this.nbitsChave)&&
-             (this.bit (i%8, k[i/8]) == this.bit (i%8, aux.chave[i/8]))) i++;
+             (this.bit (i, k) == this.bit (i, aux.chave))) i++;
       if (i > this.nbitsChave) {
         System.out.println ("Erro: chave ja esta na arvore"); 
         return t;
