@@ -1,4 +1,4 @@
-package newpackage;
+package TP01;
 
 import java.util.StringTokenizer;
 import java.io.*;

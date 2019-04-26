@@ -1,4 +1,4 @@
-package newpackage;
+package TP01;
 
 import java.util.Scanner;
 
@@ -6,6 +6,7 @@ public class TestaArvorePat {
 
     public static void main(String[] args) {
         try {
+          
             Scanner input = new Scanner(System.in);
             ArvorePatricia dicionario = new ArvorePatricia(8);
             int i=1, op = 0;
@@ -17,21 +18,38 @@ public class TestaArvorePat {
             String palavras2[] = {"sociedade", "software", "ideia", "pessoa", "Informatica",
                 "etica", "muito", "ciencia", "computacao", "que", "area", "moral"};
 
-            ExtraiPalavra palavras = new ExtraiPalavra("/home/alexandreaag/TP01_AEDs2-master/delim.txt", "/home/alexandreaag/TP01_AEDs2-master/teste.txt");
+            ExtraiPalavra palavras = new ExtraiPalavra("/home/aluno/NetBeansProjects/AEDs2/src/TP01/delim.txt", "/home/aluno/NetBeansProjects/AEDs2/src/TP01/teste.txt");
             System.out.println("Digite o número do exemplo que vc quer executar:");
             System.out.println("1: Exemplo 01");
             System.out.println("2: Exemplo 02");
             //op = input.nextInt();
             op = 1;
-            if (op == 1) palavras = new ExtraiPalavra("/home/alexandreaag/TP01_AEDs2-master/delim.txt", "/home/alexandreaag/TP01_AEDs2-master/exemplo1.txt");
-            if (op == 2) palavras = new ExtraiPalavra("delim.txt", "exemplo2.txt");
+            if (op == 1) {
+                palavras = new ExtraiPalavra("/home/aluno/NetBeansProjects/AEDs2/src/TP01/delim.txt", "/home/aluno/NetBeansProjects/AEDs2/src/TP01/exemplo1.txt");
+            }
+            if (op == 2) {
+                palavras = new ExtraiPalavra("delim.txt", "exemplo2.txt");
+            }
             while ((palavra = palavras.proximaPalavra()) != null) {//insere palavras do arquivo escolhido
-                if(!palavra.equals(""))
-                {
+                if (!palavra.equals("")) {
                     System.out.println("Chave" + (i++) + ": " + palavra);
-                    s_palavra=palavra.toCharArray();
-                    //s_palavra=dicionario.stringTiago(s_palavra);
-                    dicionario.insere(s_palavra);
+                    byte[] bytes = palavra.getBytes();
+                    StringBuilder bs_palavra = new StringBuilder();
+                    int j = 0;
+                    for(byte b : bytes){
+                        j++;
+                        if (j > 8)
+                            break;
+                        int val = b;
+                        for (int k = 0; k < 8; k++) {
+                            bs_palavra.append((val & 128) == 0 ? 0 : 1);
+                            val <<= 1;
+                        }
+                    }
+                    while (bs_palavra.length()<128)
+                        bs_palavra.insert(bs_palavra.length(), '0');
+                    System.out.println("Chave" + ": " + bs_palavra.toString());
+                    dicionario.insere(bs_palavra.toString().toCharArray());
                 }
             }
             palavras.fecharArquivos();

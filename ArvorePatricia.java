@@ -1,4 +1,4 @@
-package newpackage;
+package TP01;
 public class ArvorePatricia {
   private static abstract class PatNo { }
   private static class PatNoInt extends PatNo {
@@ -13,10 +13,10 @@ public class ArvorePatricia {
  
   // @{\it Retorna o i-\'esimo bit da chave k a partir da esquerda}@
   private int bit (int i, char[] k) {
-    if (i == 0) return 0;
-    int c = (int)k[i];
-    for (int j = 1; j <= this.nbitsChave - i; j++) c = c/2;
-    return c % 2;
+    //if (i == 0) return 0;
+    //int c = (int)k[i];
+    //for (int j = 1; j <= this.nbitsChave - i; j++) c = c/2;
+    return k[i];
   }
 
   // @{\it Verifica se p \'e n\'o externo}@
@@ -102,17 +102,43 @@ public class ArvorePatricia {
         else System.out.println ("Pai: "+ pai + " " + msg+ " Ext: " + aux.chave);
       }
     }
-  }
+    }
 
-  public void imprime () {
-    this.central (null, this.raiz, "RAIZ");
-  }
+    public void imprime() {
+        this.central(null, this.raiz, "RAIZ");
+    }
 
-  public ArvorePatricia (int nbitsChave) {
-    this.raiz = null; this.nbitsChave = nbitsChave; 
-  }
-  
-  public void pesquisa (char[] k) { this.pesquisa (k, this.raiz); }
-  
-  public void insere (char[] k) { this.raiz = this.insere (k, this.raiz); } 
+    public ArvorePatricia(int nbitsChave) {
+        this.raiz = null;
+        this.nbitsChave = nbitsChave;
+    }
+
+    public void pesquisa(char[] k) {
+        this.pesquisa(k, this.raiz);
+    }
+
+    public void insere(char[] k) {
+        this.raiz = this.insere(k, this.raiz);
+    }
+
+    public String converte(String palavra) {
+        byte[] bytes = palavra.getBytes();
+        StringBuilder bs_palavra = new StringBuilder();
+        int j = 0;
+        for (byte b : bytes) {
+            j++;
+            if (j > 8) {
+                break;
+            }
+            int val = b;
+            for (int k = 0; k < 8; k++) {
+                bs_palavra.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
+            }
+        }
+        while (bs_palavra.length() < 128) {
+            bs_palavra.insert(bs_palavra.length(), '0');
+        }
+        return bs_palavra.toString();
+    }
 }
