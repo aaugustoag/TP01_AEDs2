@@ -1,4 +1,4 @@
-package TP01;
+package tp01.AEDs2;
 
 import java.util.StringTokenizer;
 import java.io.*;
